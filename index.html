@@ -880,6 +880,8 @@ document.querySelectorAll('.logoutButton').forEach(button => {
             setTimeout(() => {
               updateButtonState(button, 'falling3');
               setTimeout(() => {
+                // Logout Logic
+                localStorage.removeItem("razaLoginStatus");
                 document.getElementById("billingApp").style.display = "none";
                 document.getElementById("loginScreen").style.display = "flex";
                 button.classList.remove('clicked', 'door-slammed', 'falling');
@@ -900,9 +902,11 @@ function checkLogin() {
     let user = document.getElementById("loginUser").value.trim();
     let pass = document.getElementById("loginPass").value.trim();
     if (user === "raza" && pass === "1234") {
+        // Save Login Status
+        localStorage.setItem("razaLoginStatus", "loggedIn");
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("billingApp").style.display = "block";
-        customerInput.focus();
+        if(typeof customerInput !== 'undefined') customerInput.focus();
     } else { alert("Galat Username ya Password! Dobara koshish karein."); }
 }
 
@@ -929,12 +933,20 @@ let isEditingBill = false;
 dateInput.valueAsDate = new Date();
 
 window.onload = function() {
-    document.getElementById("loginUser").focus();
+    // Persistent Login Check
+    let loginStatus = localStorage.getItem("razaLoginStatus");
+    if (loginStatus === "loggedIn") {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("billingApp").style.display = "block";
+        if(customerInput) customerInput.focus();
+    } else {
+        document.getElementById("loginUser").focus();
+    }
+
     if(FIREBASE_URL === "YOUR_FIREBASE_DATABASE_URL" || FIREBASE_URL === "") {
-        alert("Pehle code ke aakhri line me apni Firebase URL paste karein!");
+        console.log("Firebase URL missing.");
     } else {
         syncFromFirebase();
-        // Har 5 second me data automatic background me refresh hoga dono devices par
         setInterval(syncFromFirebase, 5000);
     }
 };
@@ -946,7 +958,6 @@ async function syncFromFirebase() {
         let data = await response.json();
         globalBills = [];
         if (data) {
-            // Objective key mapping to normal array
             Object.keys(data).forEach(key => {
                 if(data[key]) globalBills.push(data[key]);
             });
@@ -954,12 +965,11 @@ async function syncFromFirebase() {
         calculateReports();
         loadHistory();
         if(!isEditingBill) generateInvoice();
-    } catch (e) { console.log("Network error or database offline:", e); }
+    } catch (e) { console.log("Network error:", e); }
 }
 
 async function saveBillToFirebase(billData) {
     try {
-        // Invoice number ko unique key bana rahe hain path me taaki overwrite/edit sahi se ho
         let urlName = billData.invoice; 
         await fetch(`${FIREBASE_URL}/bills/${urlName}.json`, {
             method: 'PUT',
@@ -968,7 +978,7 @@ async function saveBillToFirebase(billData) {
         await syncFromFirebase();
         return true;
     } catch(e) {
-        alert("Internet Slow hai ya Offline hai! Bill save nahi ho paya.");
+        alert("Check internet connection!");
         return false;
     }
 }
@@ -977,13 +987,12 @@ async function deleteBillFromFirebase(inv) {
     try {
         await fetch(`${FIREBASE_URL}/bills/${inv}.json`, { method: 'DELETE' });
         await syncFromFirebase();
-    } catch(e) { alert("Delete failed! Check internet connection."); }
+    } catch(e) { alert("Delete failed!"); }
 }
 
 function generateInvoice() {
     let year = new Date().getFullYear();
     let maxNum = 0;
-    
     globalBills.forEach(b => {
         if(b.invoice && b.invoice.startsWith("INV-" + year)) {
             let parts = b.invoice.split("-");
@@ -991,7 +1000,6 @@ function generateInvoice() {
             if(num > maxNum) maxNum = num;
         }
     });
-    
     let next = maxNum + 1;
     let padded = String(next).padStart(3, '0');
     invoiceInput.value = "INV-" + year + "-" + padded;
@@ -1182,14 +1190,14 @@ function loadHistory() {
 }
 
 async function deleteHistory(inv) {
-    if (confirm("Delete this bill forever from database?")) {
+    if (confirm("Delete this bill forever?")) {
         await deleteBillFromFirebase(inv);
     }
 }
 
 function viewBill(inv) {
     let b = globalBills.find(x => x.invoice === inv);
-    if (!b) { alert("Bill nahi mila!"); return; }
+    if (!b) return;
     
     let itemTotal = 0;
     let itemsHtml = "";
@@ -1198,10 +1206,10 @@ function viewBill(inv) {
             itemTotal += parseFloat(it.amt) || 0;
             itemsHtml += `
                 <tr>
-                    <td style="padding:8px; border:1px solid #ddd;">${it.name}</td>
-                    <td style="padding:8px; border:1px solid #ddd; text-align:center;">${it.rate}</td>
-                    <td style="padding:8px; border:1px solid #ddd; text-align:center;">${it.qty}</td>
-                    <td style="padding:8px; border:1px solid #ddd; text-align:right;">${it.amt}</td>
+                    <td>${it.name}</td>
+                    <td style="text-align:center;">${it.rate}</td>
+                    <td style="text-align:center;">${it.qty}</td>
+                    <td style="text-align:right;">${it.amt}</td>
                 </tr>`;
         });
     }
@@ -1213,37 +1221,28 @@ function viewBill(inv) {
 
     let w = window.open('', '_blank');
     w.document.write(`
-        <html>
-        <head><title>Bill - ${b.invoice}</title>
+        <html><head><title>Bill - ${b.invoice}</title>
         <style>
-            body { font-family: sans-serif; padding: 15px; line-height: 1.4; color: #333; }
-            table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+            body { font-family: sans-serif; padding: 15px; }
+            table { width: 100%; border-collapse: collapse; }
             th { background: #2c3e50; color: white; padding: 10px; }
             td { padding: 8px; border: 1px solid #ddd; }
-            .total-sec { text-align: right; margin-top: 20px; }
-            .grand { color: #e67e22; font-size: 20px; border-top: 2px solid #ddd; padding-top: 10px; }
-            .due { color: #e74c3c; font-size: 20px; font-weight: bold; }
-            .print-btn { background: #27ae60; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
-            @media print { .print-btn { display: none; } }
+            .grand { color: #e67e22; font-size: 20px; }
+            @media print { .no-print { display: none; } }
         </style></head>
         <body>
-            <div style="text-align:center;">
-                <h2 style="margin:0; color:#27ae60;">RAZA KIRANA</h2>
-                <p style="margin:5px 0;">Manyar Wada, Hingone, Yawal<br>📞 9834515540</p>
-            </div><hr>
-            <p><b>Bill No:</b> ${b.invoice}<br><b>Customer:</b> ${b.customer}<br><b>Date:</b> ${b.date}</p>
-            <table>
-                <thead><tr><th>Item</th><th>Rate</th><th>Qty</th><th>Amt</th></tr></thead>
-                <tbody>${itemsHtml}</tbody>
-            </table>
-            <div class="total-sec">
-                <p>Current Total: <b>₹${itemTotal.toFixed(2)}</b></p>
-                <p>Previous Balance: <b>₹${prevBal.toFixed(2)}</b></p>
+            <center><h2>RAZA KIRANA</h2><p>Hingone, Yawal | 9834515540</p></center><hr>
+            <p>Invoice: ${b.invoice} | Customer: ${b.customer} | Date: ${b.date}</p>
+            <table><thead><tr><th>Item</th><th>Rate</th><th>Qty</th><th>Amt</th></tr></thead>
+            <tbody>${itemsHtml}</tbody></table>
+            <div style="text-align:right;">
+                <p>Current Total: ₹${itemTotal.toFixed(2)}</p>
+                <p>Previous Balance: ₹${prevBal.toFixed(2)}</p>
                 <h2 class="grand">Grand Total: ₹${grandTotal.toFixed(2)}</h2>
-                <p>Amount Paid: <b>₹${paidAmt.toFixed(2)}</b></p>
-                <div class="due">Balance Due (Baki): ₹${balanceDue.toFixed(2)}</div>
+                <p>Paid: ₹${paidAmt.toFixed(2)}</p>
+                <h3>Balance: ₹${balanceDue.toFixed(2)}</h3>
             </div>
-            <button class="print-btn" onclick="window.print()">PRINT / SAVE AS PDF</button>
+            <button class="no-print" onclick="window.print()" style="width:100%; padding:15px; background:#27ae60; color:white; border:none; border-radius:8px;">PRINT BILL</button>
         </body></html>
     `);
     w.document.close();
@@ -1252,68 +1251,55 @@ function viewBill(inv) {
 function editBill(inv) {
     let b = globalBills.find(x => x.invoice === inv);
     if (!b) return;
-    
     invoiceInput.value = b.invoice;
     isEditingBill = true;
     customerInput.value = b.customer;
     dateInput.value = b.date;
     prevInput.value = b.prevBal || 0;
     paidInput.value = b.paidAmt || 0;
-    
     billTable.querySelector("tbody").innerHTML = "";
-    if (b.items && Array.isArray(b.items)) {
+    if (b.items) {
         b.items.forEach(it => {
             let row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${it.name}</td><td>${it.rate}</td><td data-kg="${it.kg}">${it.qty}</td><td>${it.amt}</td>
-                <td class="action-col"><button class="edit-btn" onclick="editRow(this)">✏️</button><button class="delete-btn" onclick="del(this)">🗑</button></td>`;
+            row.innerHTML = `<td>${it.name}</td><td>${it.rate}</td><td data-kg="${it.kg}">${it.qty}</td><td>${it.amt}</td>
+            <td class="action-col"><button class="edit-btn" onclick="editRow(this)">✏️</button><button class="delete-btn" onclick="del(this)">🗑</button></td>`;
             billTable.querySelector("tbody").appendChild(row);
         });
     }
     updateTotals();
     document.getElementById("historySection").style.display = "none";
-    window.scrollTo(0, 0);
+    window.scrollTo(0,0);
     customerInput.focus();
 }
 
 function toggleHistory() {
     let sec = document.getElementById("historySection");
-    if (sec.style.display === "none" || sec.style.display === "") {
-        sec.style.display = "block";
-        loadHistory();
-        setTimeout(() => { sec.scrollIntoView({ behavior: "smooth", block: "start" }); }, 300);
-    } else { sec.style.display = "none"; }
+    sec.style.display = (sec.style.display === "none") ? "block" : "none";
+    if(sec.style.display === "block") loadHistory();
 }
   
 function searchBill() {
-    let val = document.getElementById("searchBill").value.toLowerCase().trim();
-    let rows = document.querySelectorAll("#historyTable tbody tr");
-    rows.forEach(r => {
-        let invoice = r.cells[0].innerText.toLowerCase();
-        let customer = r.cells[1].innerText.toLowerCase();
-        r.style.display = (invoice.includes(val) || customer.includes(val)) ? "" : "none";
+    let val = document.getElementById("searchBill").value.toLowerCase();
+    document.querySelectorAll("#historyTable tbody tr").forEach(r => {
+        r.style.display = (r.cells[0].innerText.toLowerCase().includes(val) || r.cells[1].innerText.toLowerCase().includes(val)) ? "" : "none";
     });
 }
 
 async function resetBill() {
-    let rows = document.querySelectorAll("#bill tbody tr");
-    if (rows.length === 0) {
-        isEditingBill = false; customerInput.value = ""; prevInput.value = "0"; paidInput.value = "0";
-        billTable.querySelector("tbody").innerHTML = ""; updateTotals(); generateInvoice(); customerInput.focus();
-        return;
+    if (document.querySelectorAll("#bill tbody tr").length === 0) {
+        isEditingBill = false; customerInput.value = ""; prevInput.value = "0"; paidInput.value = "0"; updateTotals(); generateInvoice(); return;
     }
-    if (!confirm("Save this bill to cloud and start new?")) return;
-    let saved = await saveBill();
-    if (!saved) return;
-
-    isEditingBill = false;
-    billTable.querySelector("tbody").innerHTML = "";
-    customerInput.value = ""; prevInput.value = "0"; paidInput.value = "0";
-    currentText.innerText = "₹0.00"; prevShow.innerText = "₹0.00"; grandText.innerText = "₹0.00"; paidShow.innerText = "₹0.00"; dueText.innerText = "₹0.00";
-    generateInvoice(); customerInput.focus();
+    if (!confirm("Save bill and start new?")) return;
+    if (await saveBill()) {
+        isEditingBill = false;
+        billTable.querySelector("tbody").innerHTML = "";
+        customerInput.value = ""; prevInput.value = "0"; paidInput.value = "0";
+        updateTotals(); generateInvoice(); customerInput.focus();
+    }
 }
 
-document.getElementById("historyBtn").addEventListener("click", function() { toggleHistory(); });
+document.getElementById("historyBtn").addEventListener("click", toggleHistory);
 </script>
 </body>
 </html>
+

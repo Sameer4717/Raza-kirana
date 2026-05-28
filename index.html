@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raza Kirana Billing Software</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght=500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
+
+<style>
+/* ==================== 1. ORIGINAL LOGIN NEON FORM CSS ==================== */
+@property --a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #151f28;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  font-family: "Poppins", sans-serif;
+}
+
+.box {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  background: repeating-conic-gradient(
+    from var(--a),
+    #ff2770 0%,
+    #ff2770 5%,
+    transparent 5%,
+    transparent 40%,
+    #ff2770 50%
+  );
+  filter: drop-shadow(0 15px 50px #000);
+  border-radius: 20px;
+  animation: rotating 4s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+}
+
+@keyframes rotating {
+  0% { --a: 0deg; }
+  100% { --a: 360deg; }
+}
+
+.box::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(
+    from var(--a),
+    #45f3ff 0%,
+    #45f3ff 5%,
+    transparent 5%,
+    transparent 40%,
+    #45f3ff 50%
+  );
+  filter: drop-shadow(0 15px 50px #000);
+  border-radius: 20px;
+  animation: rotating 4s linear infinite;
+  animation-delay: -1s;
+}
+
+.box::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background: #2d2d39;
+  border-radius: 15px;
+  border: 8px solid #25252b;
+}
+
+.box:hover {
+  width: 450px;
+  height: 500px;
+}
+
+.box:hover .login {
+  inset: 40px;
+}
+
+.box:hover .loginBx {
+  transform: translateY(0px);
+}
+
+.login {
+  position: absolute;
+  inset: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  background: #00000033;
+  color: #fff;
+  z-index: 1000;
+  box-shadow: inset 0 10px 20px #00000080;
+  border-bottom: 2px solid #ffffff80;
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.loginBx {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  width: 70%;
+  transform: translateY(126px);
+  transition: 0.5s;
+}
+
+.loginBx h2 {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.loginBx h2 i {
+  color: #ff2770;
+  text-shadow: 0 0 5px #ff2770, 0 0 20px #ff2770;
+}
+
+.loginBx input {
+  width: 100%;
+  padding: 10px 20px;
+  outline: none;
+  border: none;
+  font-size: 1em;
+  color: #fff;
+  background: #0000001a;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  box-sizing: border-box;
+}
+
+.loginBx input::placeholder {
+  color: #999;
+}
+
+.loginBx input[type="submit"] {
+  background: #45f3ff;
+  border: none;
+  font-weight: 500;
+  color: #111;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.loginBx input[type="submit"]:hover {
+  box-shadow: 0 0 10px #45f3ff, 0 0 60px #45f3ff;
+}
+
+.group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+}
+
+.group a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.group a:nth-child(2) {
+  color: #ff2770;
+  font-weight: 600;
+}
+
+
+/* ==================== 2. ORIGINAL ANIMATED LOGOUT BUTTON CSS ==================== */
+.logoutButton {
+  --figure-duration: 100ms;
+  --transform-figure: none;
+  --walking-duration: 100ms;
+  --transform-arm1: none;
+  --transform-wrist1: none;
+  --transform-arm2: none;
+  --transform-wrist2: none;
+  --transform-leg1: none;
+  --transform-calf1: none;
+  --transform-leg2: none;
+  --transform-calf2: none;
+  background: none;
+  border: 0;
+  color: #f4f7ff;
+  cursor: pointer;
+  display: block;
+  font-family: "Quicksand", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  outline: none;
+  padding: 0 0 0 20px;
+  perspective: 100px;
+  position: relative;
+  text-align: left;
+  width: 130px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.logoutButton::before {
+  background-color: #f4f7ff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: none;
+  transition: transform 50ms ease;
+  width: 100%;
+  z-index: 2;
+}
+
+.logoutButton .button-text {
+  color: #1f2335;
+  font-weight: 700;
+  position: relative;
+  z-index: 10;
+}
+
+.logoutButton .door,
+.logoutButton .doorway {
+  fill: #1f2335;
+}
+
+.logoutButton:hover .door {
+  transform: rotateY(20deg);
+}
+.logoutButton:active::before {
+  transform: scale(0.96);
+}
+.logoutButton:active .door {
+  transform: rotateY(28deg);
+}
+.logoutButton.clicked::before {
+  transform: none;
+}
+.logoutButton.clicked .door {
+  transform: rotateY(35deg);
+}
+.logoutButton.door-slammed .door {
+  transform: none;
+  transition: transform 100ms ease-in 250ms;
+}
+.logoutButton.falling {
+  animation: shake 200ms linear;
+}
+.logoutButton.falling .bang {
+  animation: flash 300ms linear;
+}
+.logoutButton.falling .figure {
+  animation: spin 1000ms infinite linear;
+  bottom: -1080px;
+  opacity: 0;
+  right: 1px;
+  transition: transform calc(var(--figure-duration) * 1ms) linear, bottom calc(var(--figure-duration) * 1ms) cubic-bezier(0.7, 0.1, 1, 1) 100ms, opacity calc(var(--figure-duration) * 0.25ms) linear calc(var(--figure-duration) * 0.75ms);
+  z-index: 1;
+}
+
+.logoutButton svg {
+  display: block;
+  position: absolute;
+}
+
+.logoutButton .figure {
+  bottom: 5px;
+  fill: #4371f7;
+  right: 18px;
+  transform: var(--transform-figure);
+  transition: transform calc(var(--figure-duration) * 1ms) cubic-bezier(0.2, 0.1, 0.8, 0.9);
+  width: 30px;
+  z-index: 4;
+}
+
+.logoutButton .door,
+.logoutButton .doorway {
+  bottom: 4px;
+  right: 12px;
+  width: 32px;
+}
+
+.logoutButton .door {
+  transform: rotateY(20deg);
+  transform-origin: 100% 50%;
+  transform-style: preserve-3d;
+  transition: transform 200ms ease;
+  z-index: 5;
+}
+.logoutButton .door path {
+  fill: #4371f7;
+  stroke: #4371f7;
+  stroke-width: 4;
+}
+
+.logoutButton .doorway {
+  z-index: 3;
+}
+
+.logoutButton .bang {
+  opacity: 0;
+}
+
+.logoutButton .arm1, .logoutButton .wrist1, .logoutButton .arm2, .logoutButton .wrist2, .logoutButton .leg1, .logoutButton .calf1, .logoutButton .leg2, .logoutButton .calf2 {
+  transition: transform calc(var(--walking-duration) * 1ms) ease-in-out;
+}
+
+.logoutButton .arm1 {
+  transform: var(--transform-arm1);
+  transform-origin: 52% 45%;
+}
+
+.logoutButton .wrist1 {
+  transform: var(--transform-wrist1);
+  transform-origin: 59% 55%;
+}
+
+.logoutButton .arm2 {
+  transform: var(--transform-arm2);
+  transform-origin: 47% 43%;
+}
+
+.logoutButton .wrist2 {
+  transform: var(--transform-wrist2);
+  transform-origin: 35% 47%;
+}
+
+.logoutButton .leg1 {
+  transform: var(--transform-leg1);
+  transform-origin: 47% 64.5%;
+}
+
+.logoutButton .calf1 {
+  transform: var(--transform-calf1);
+  transform-origin: 55.5% 71.5%;
+}
+
+.logoutButton .leg2 {
+  transform: var(--transform-leg2);
+  transform-origin: 43% 63%;
+}
+
+.logoutButton .calf2 {
+  transform: var(--transform-calf2);
+  transform-origin: 41.5% 73%;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg) scale(0.94); }
+  to { transform: rotate(359deg) scale(0.94); }
+}
+@keyframes shake {
+  0% { transform: rotate(-1deg); }
+  50% { transform: rotate(2deg); }
+  100% { transform: rotate(-1deg); }
+}
+@keyframes flash {
+  0% { opacity: 0.4; }
+  100% { opacity: 0; }
+}
+
+
+/* ==================== 3. BILLING SOFTWARE CSS ==================== */
+:root{
+--primary:#2c3e50;
+--accent:#e67e22;
+--bg:#f4f6f7;
+}
+.main-app {
+  display: none;
+}
+body{
+font-family: 'Poppins', Segoe UI, sans-serif;
+margin:0;
+padding:10px;
+background:var(--bg);
+}
+.header{
+position: relative;
+text-align:center;
+background:#fff;
+padding:20px;
+border-radius:8px;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
+border-bottom:4px solid var(--accent);
+margin-bottom:20px;
+}
+.logout-btn-wrapper {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+.shop-name{
+font-size:36px;
+font-weight:900;
+color:#27ae60;
+margin:0;
+}
+.shop-contact{
+font-size:22px;
+font-weight:800;
+margin-top:8px;
+color:#e74c3c;
+}
+.shop-address{
+font-size:18px;
+font-weight:700;
+margin-top:5px;
+}
+.bill-form{
+background:#fff;
+padding:15px;
+border-radius:8px;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:20px;
+}
+.form-group{
+display:flex;
+flex-direction:column;
+}
+.form-group input{
+padding:8px;
+border:1px solid #ccc;
+border-radius:4px;
+color: #333;
+background: #fff;
+}
+.item-section{
+background:#fff;
+padding:15px;
+border-radius:8px;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
+margin-bottom:20px;
+}
+.item-row{
+display:grid;
+grid-template-columns:2fr 1fr 1fr 1fr;
+gap:10px;
+}
+.item-row input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+  background: #fff;
+}
+.main-app button{
+padding:10px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-weight:bold;
+}
+.add-btn{background:var(--primary);color:#fff;}
+.print-btn{background:#27ae60;color:#fff;}
+.reset-btn{background:#95a5a6;color:#fff;}
+.history-btn{background:#8e44ad;color:#fff;}
+table{
+width:100%;
+border-collapse:collapse;
+background:#fff;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
+margin-bottom:20px;
+}
+th,td{
+padding:10px;
+border-bottom:1px solid #ddd;
+text-align:center;
+}
+th{
+background:var(--primary);
+color:#fff;
+}
+.delete-btn{
+background:#e74c3c;
+color:#fff;
+padding:5px 8px;
+}
+.edit-btn{
+background:#f39c12;
+color:#fff;
+padding:5px 8px;
+}
+.save-btn{
+background:#27ae60;
+color:#fff;
+padding:5px 8px;
+}
+.totals{
+background:#fff;
+padding:15px;
+width:300px;
+margin-left:auto;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
+border-radius:8px;
+}
+.total-line{
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+}
+.grand{
+font-size:18px;
+font-weight:800;
+color:var(--accent);
+border-top:2px solid #ddd;
+padding-top:8px;
+}
+.due-line{
+font-size:18px;
+font-weight:800;
+color:#e74c3c;
+border-top:1px dashed #ddd;
+padding-top:8px;
+}
+.report-card {
+    background: #ecf0f1;
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 5px solid var(--primary);
+}
+
+/* ==================== 4. CRITICAL FIXED PRINT CSS ==================== */
+@media print {
+    button, .logout-btn-wrapper, .logoutButton, .item-section, .reset-btn, .history-btn, hr, 
+    .report-section, .history-section, #mobile, .add-btn, .action-col, center, input[type="button"] {
+        display: none !important;
+    }
+    html, body { 
+        background: #fff !important; 
+        margin: 0 !important; 
+        padding: 0 !important;
+        overflow: visible !important;
+        height: auto !important;
+    }
+    .main-app {
+        display: block !important;
+        overflow: visible !important;
+    }
+    .main-app input {
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        font-size: 16px !important;
+        outline: none !important;
+        color: #000 !important;
+    }
+    .header {
+        box-shadow: none !important;
+        border-bottom: 3px solid #e67e22 !important;
+        margin-bottom: 15px !important;
+        display: block !important;
+        padding: 10px !important;
+    }
+    .shop-name {
+        color: #27ae60 !important; 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .bill-form { 
+        display: block !important; 
+        margin-bottom: 10px !important; 
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+    .form-group { 
+        display: inline-block !important; 
+        width: 48% !important; 
+        margin-bottom: 5px !important; 
+    }
+    table { 
+        border: 1px solid #000 !important; 
+        width: 100% !important; 
+        box-shadow: none !important;
+        page-break-inside: auto !important;
+    }
+    tr {
+        page-break-inside: avoid !important;
+        page-break-after: auto !important;
+    }
+    th { 
+        background-color: #2c3e50 !important; 
+        color: white !important; 
+        -webkit-print-color-adjust: exact !important; 
+        print-color-adjust: exact !important;
+    }
+    td { 
+        border: 1px solid #ddd !important; 
+    }
+    .totals { 
+        display: block !important;
+        width: 280px !important; 
+        margin-left: auto !important; 
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        padding: 10px !important;
+        margin-top: 15px !important;
+        page-break-inside: avoid !important;
+    }
+    .grand {
+        color: #e67e22 !important; 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        font-weight: 800 !important;
+    }
+    .due-line {
+        color: #e74c3c !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
+
+@media (max-width: 768px){
+    .bill-form{ grid-template-columns:1fr; }
+    .item-row{ grid-template-columns:1fr; }
+    .totals{ width:100%; }
+    .main-app button{ width:100%; margin-bottom:8px; font-size:16px; padding:12px; }
+    #mobile{ width:100% !important; }
+    .logout-btn-wrapper { position: relative; top: 0; right: 0; display: flex; justify-content: center; margin-bottom: 10px;}
+}
+</style>
+</head>
+<body>
+
+<div class="login-container" id="loginScreen">
+  <div class="box">
+    <div class="login">
+      <div class="loginBx">
+        <h2>
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Login
+          <i class="fa-solid fa-heart"></i>
+        </h2>
+        <input type="text" id="loginUser" placeholder="Username">
+        <input type="password" id="loginPass" placeholder="Password">
+        <input type="submit" value="Sign in" onclick="checkLogin()">
+        <div class="group">
+          <a href="#" onclick="alert('Contact Developer to reset!')">Forgot Password</a>
+          <a href="#">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main-app" id="billingApp">
+  <div class="header">
+    <div class="logout-btn-wrapper">
+      <button class="logoutButton">
+        <svg class="doorway" viewBox="0 0 100 100">
+          <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z" />
+          <path class="bang" d="M40.5 43.7L26.6 31.4l-2.5 6.7zM41.9 50.4l-19.5-4-1.4 6.3zM40 57.4l-17.7 3.9 3.9 5.7z" />
+        </svg>
+        <svg class="figure" viewBox="0 0 100 100">
+          <circle cx="52.1" cy="32.4" r="6.4" />
+          <path d="M50.7 62.8c-1.2 2.5-3.6 5-7.2 4-3.2-.9-4.9-3.5-4-7.8.7-3.4 3.1-13.8 4.1-15.8 1.7-3.4 1.6-4.6 7-3.7 4.3.7 4.6 2.5 4.3 5.4-.4 3.7-2.8 15.1-4.2 17.9z" />
+          <g class="arm1">
+            <path d="M55.5 56.5l-6-9.5c-1-1.5-.6-3.5.9-4.4 1.5-1 3.7-1.1 4.6.4l6.1 10c1 1.5.3 3.5-1.1 4.4-1.5.9-3.5.5-4.5-.9z" />
+            <path class="wrist1" d="M69.4 59.9L58.1 58c-1.7-.3-2.9-1.9-2.6-3.7.3-1.7 1.9-2.9 3.7-2.6l11.4 1.9c1.7.3 2.9 1.9 2.6 3.7-.4 1.7-2 2.9-3.8 2.6z" />
+          </g>
+          <g class="arm2">
+            <path d="M34.2 43.6L45 40.3c1.7-.6 3.5.3 4 2 .6 1.7-.3 4-2 4.5l-10.8 2.8c-1.7.6-3.5-.3-4-2-.6-1.6.3-3.4 2-4z" />
+            <path class="wrist2" d="M27.1 56.2L32 45.7c.7-1.6 2.6-2.3 4.2-1.6 1.6.7 2.3 2.6 1.6 4.2L33 58.8c-.7 1.6-2.6 2.3-4.2 1.6-1.7-.7-2.4-2.6-1.7-4.2z" />
+          </g>
+          <g class="leg1">
+            <path d="M52.1 73.2s-7-5.7-7.9-6.5c-.9-.9-1.2-3.5-.1-4.9 1.1-1.4 3.8-1.9 5.2-.9l7.9 7c1.4 1.1 1.7 3.5.7 4.9-1.1 1.4-4.4 1.5-5.8.4z" />
+            <path class="calf1" d="M52.6 84.4l-1-12.8c-.1-1.9 1.5-3.6 3.5-3.7 2-.1 3.7 1.4 3.8 3.4l1 12.8c.1 1.9-1.5 3.6-3.5 3.7-2 0-3.7-1.5-3.8-3.4z" />
+          </g>
+          <g class="leg2">
+            <path d="M37.8 72.7s1.3-10.2 1.6-11.4 2.4-2.8 4.1-2.6c1.7.2 3.6 2.3 3.4 4l-1.8 11.1c-.2 1.7-1.7 3.3-3.4 3.1-1.8-.2-4.1-2.4-3.9-4.2z" />
+            <path class="calf2" d="M29.5 82.3l9.6-10.9c1.3-1.4 3.6-1.5 5.1-.1 1.5 1.4.4 4.9-.9 6.3l-8.5 9.6c-1.3 1.4-3.6 1.5-5.1.1-1.4-1.3-1.5-3.5-.2-5z" />
+          </g>
+        </svg>
+        <svg class="door" viewBox="0 0 100 100">
+          <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z" />
+          <circle cx="66" cy="50" r="3.7" />
+        </svg>
+        <span class="button-text">Log Out</span>
+      </button>
+    </div>
+
+    <h1 class="shop-name">RAZA KIRANA</h1>
+    <div class="shop-contact">📞 9834515540</div>
+    <div class="shop-address">📍 Manyar Wada, Hingone, Yawal, Jalgaon (MH)</div>
+  </div>
+
+  <div class="bill-form">
+    <div class="form-group">
+      <label>Customer Name</label>
+      <input type="text" id="customer">
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" id="date">
+    </div>
+    <div class="form-group">
+      <label>Previous Balance ₹</label>
+      <input type="number" id="prev" value="0" oninput="updateTotals()">
+    </div>
+    <div class="form-group">
+      <label>Invoice No</label>
+      <input type="text" id="invoice" readonly>
+    </div>
+    <div class="form-group">
+      <label>Amount Paid (Jama Rakam) ₹</label>
+      <input type="number" id="paid" value="0" oninput="updateTotals()">
+    </div>
+  </div>
+
+  <div class="item-section">
+    <div class="item-row">
+      <input type="text" id="name" placeholder="Item Name">
+      <input type="number" id="rate" placeholder="Rate" oninput="calcAmount()">
+      <input type="text" id="qty" placeholder="e.g. 500g or 2kg" oninput="calcAmount()">
+      <input type="number" id="amount" placeholder="Amount" readonly>
+    </div>
+    <br>
+    <button class="add-btn" onclick="addItem()">+ Add Item</button>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <table id="bill">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Rate</th>
+          <th>Qty</th>
+          <th>Amount</th>
+          <th class="action-col">Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="totals">
+    <div class="total-line">
+      <span>Current Total:</span>
+      <span id="current">₹0.00</span>
+    </div>
+    <div class="total-line">
+      <span>Previous Balance:</span>
+      <span id="prevShow">₹0.00</span>
+    </div>
+    <div class="total-line grand">
+      <span>Grand Total:</span>
+      <span id="grand">₹0.00</span>
+    </div>
+    <div class="total-line">
+      <span>Amount Paid:</span>
+      <span id="paidShow">₹0.00</span>
+    </div>
+    <div class="total-line due-line">
+      <span>Balance Due (Baki):</span>
+      <span id="dueText">₹0.00</span>
+    </div>
+  </div>
+
+  <br>
+  <center>
+    <button class="print-btn" onclick="printBill()">Print</button>
+    <button class="reset-btn" onclick="resetBill()">Save & New Bill</button>
+    <button class="history-btn" id="historyBtn">Bill History</button>
+  </center>
+    
+  <br><br>
+
+  <input type="text" id="mobile" placeholder="Enter Mobile No" style="padding:10px; width:180px; border:1px solid #ccc; border-radius:4px;">
+  <button class="add-btn" onclick="sendWhatsApp()">Send WhatsApp</button>
+
+  <hr>
+    
+  <div class="item-section report-section">
+      <h3>📊 Daily Report (Today)</h3>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+          <div class="report-card">
+              <b>Today's Customers:</b>
+              <span id="todayCustomers">0</span>
+          </div>
+          <div class="report-card">
+              <b>Today's Sale:</b>
+              <span id="todaySale">₹0.00</span>
+          </div>
+      </div>
+
+      <br>
+      <h3>📅 Date Range Report</h3>
+      From <input type="date" id="fromDate"> 
+      To <input type="date" id="toDate">
+      <button class="add-btn" onclick="dateReport()">Check Range</button>
+      <br><br>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+          <div><b>Total Customers:</b> <span id="rangeCustomers">0</span></div>
+          <div><b>Total Sale:</b> <span id="rangeSale">₹0.00</span></div>
+      </div>
+  </div>
+
+  <div class="history-section" id="historySection" style="display:none; padding:15px; background:#fff; margin-top:20px; border-radius:8px;">
+      <h2>Bill History</h2>
+      <input type="text" id="searchBill" placeholder="Search by Invoice or Customer" oninput="searchBill()" style="padding:8px;width:250px; margin-bottom:10px; border:1px solid #ccc; border-radius:4px;">
+      <div style="overflow-x:auto;">
+        <table id="historyTable">
+             <thead>
+              <tr>
+                  <th>Invoice</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+  </div>
+</div>
+
+<script>
+// Firebase Base Configuration URL (Yahan apni link dalein)
+const FIREBASE_URL = "https://raza-kirana-default-rtdb.firebaseio.com/"; 
+
+// Global variables for local sync array
+let globalBills = [];
+
+const logoutButtonStates = {
+  'default': { '--figure-duration': '100', '--transform-figure': 'none', '--walking-duration': '100', '--transform-arm1': 'none', '--transform-wrist1': 'none', '--transform-arm2': 'none', '--transform-wrist2': 'none', '--transform-leg1': 'none', '--transform-calf1': 'none', '--transform-leg2': 'none', '--transform-calf2': 'none' },
+  'hover': { '--figure-duration': '100', '--transform-figure': 'translateX(1.5px)', '--walking-duration': '100', '--transform-arm1': 'rotate(-5deg)', '--transform-wrist1': 'rotate(-15deg)', '--transform-arm2': 'rotate(5deg)', '--transform-wrist2': 'rotate(6deg)', '--transform-leg1': 'rotate(-10deg)', '--transform-calf1': 'rotate(5deg)', '--transform-leg2': 'rotate(20deg)', '--transform-calf2': 'rotate(-20deg)' },
+  'walking1': { '--figure-duration': '300', '--transform-figure': 'translateX(11px)', '--walking-duration': '300', '--transform-arm1': 'translateX(-4px) translateY(-2px) rotate(120deg)', '--transform-wrist1': 'rotate(-5deg)', '--transform-arm2': 'translateX(4px) rotate(-110deg)', '--transform-wrist2': 'rotate(-5deg)', '--transform-leg1': 'translateX(-3px) rotate(80deg)', '--transform-calf1': 'rotate(-30deg)', '--transform-leg2': 'translateX(4px) rotate(-60deg)', '--transform-calf2': 'rotate(20deg)' },
+  'walking2': { '--figure-duration': '400', '--transform-figure': 'translateX(17px)', '--walking-duration': '300', '--transform-arm1': 'rotate(60deg)', '--transform-wrist1': 'rotate(-15deg)', '--transform-arm2': 'rotate(-45deg)', '--transform-wrist2': 'rotate(6deg)', '--transform-leg1': 'rotate(-5deg)', '--transform-calf1': 'rotate(10deg)', '--transform-leg2': 'rotate(10deg)', '--transform-calf2': 'rotate(-20deg)' },
+  'falling1': { '--figure-duration': '1600', '--walking-duration': '400', '--transform-arm1': 'rotate(-60deg)', '--transform-wrist1': 'none', '--transform-arm2': 'rotate(30deg)', '--transform-wrist2': 'rotate(120deg)', '--transform-leg1': 'rotate(-30deg)', '--transform-calf1': 'rotate(-20deg)', '--transform-leg2': 'rotate(20deg)' },
+  'falling2': { '--walking-duration': '300', '--transform-arm1': 'rotate(-100deg)', '--transform-arm2': 'rotate(-60deg)', '--transform-wrist2': 'rotate(60deg)', '--transform-leg1': 'rotate(80deg)', '--transform-calf1': 'rotate(20deg)', '--transform-leg2': 'rotate(-60deg)' },
+  'falling3': { '--walking-duration': '500', '--transform-arm1': 'rotate(-30deg)', '--transform-wrist1': 'rotate(40deg)', '--transform-arm2': 'rotate(50deg)', '--transform-wrist2': 'none', '--transform-leg1': 'rotate(-30deg)', '--transform-leg2': 'rotate(20deg)', '--transform-calf2': 'none' }
+};
+
+document.querySelectorAll('.logoutButton').forEach(button => {
+  button.state = 'default';
+  let updateButtonState = (button, state) => {
+    if (logoutButtonStates[state]) {
+      button.state = state;
+      for (let key in logoutButtonStates[state]) { button.style.setProperty(key, logoutButtonStates[state][key]); }
+    }
+  };
+  button.addEventListener('mouseenter', () => { if (button.state === 'default') { updateButtonState(button, 'hover'); } });
+  button.addEventListener('mouseleave', () => { if (button.state === 'hover') { updateButtonState(button, 'default'); } });
+  button.addEventListener('click', () => {
+    if (button.state === 'default' || button.state === 'hover') {
+      button.classList.add('clicked'); updateButtonState(button, 'walking1');
+      setTimeout(() => {
+        button.classList.add('door-slammed'); updateButtonState(button, 'walking2');
+        setTimeout(() => {
+          button.classList.add('falling'); updateButtonState(button, 'falling1');
+          setTimeout(() => {
+            updateButtonState(button, 'falling2');
+            setTimeout(() => {
+              updateButtonState(button, 'falling3');
+              setTimeout(() => {
+                document.getElementById("billingApp").style.display = "none";
+                document.getElementById("loginScreen").style.display = "flex";
+                button.classList.remove('clicked', 'door-slammed', 'falling');
+                updateButtonState(button, 'default');
+                document.getElementById("loginUser").value = "";
+                document.getElementById("loginPass").value = "";
+                document.getElementById("loginUser").focus();
+              }, 1000);
+            }, logoutButtonStates['falling2']['--walking-duration']);
+          }, logoutButtonStates['falling1']['--walking-duration']);
+        }, logoutButtonStates['walking2']['--figure-duration']);
+      }, logoutButtonStates['walking1']['--figure-duration']);
+    }
+  });
+});
+
+function checkLogin() {
+    let user = document.getElementById("loginUser").value.trim();
+    let pass = document.getElementById("loginPass").value.trim();
+    if (user === "raza" && pass === "1234") {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("billingApp").style.display = "block";
+        customerInput.focus();
+    } else { alert("Galat Username ya Password! Dobara koshish karein."); }
+}
+
+document.getElementById("loginUser").addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); document.getElementById("loginPass").focus(); } });
+document.getElementById("loginPass").addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); checkLogin(); } });
+
+let nameInput = document.getElementById("name");
+let rateInput = document.getElementById("rate");
+let qtyInput = document.getElementById("qty");
+let amountInput = document.getElementById("amount");
+let billTable = document.getElementById("bill");
+let currentText = document.getElementById("current");
+let prevInput = document.getElementById("prev");
+let prevShow = document.getElementById("prevShow");
+let grandText = document.getElementById("grand");
+let paidInput = document.getElementById("paid");
+let paidShow = document.getElementById("paidShow");
+let dueText = document.getElementById("dueText");
+let customerInput = document.getElementById("customer");
+let dateInput = document.getElementById("date");
+let invoiceInput = document.getElementById("invoice");
+let isEditingBill = false;
+
+dateInput.valueAsDate = new Date();
+
+window.onload = function() {
+    document.getElementById("loginUser").focus();
+    if(FIREBASE_URL === "YOUR_FIREBASE_DATABASE_URL" || FIREBASE_URL === "") {
+        alert("Pehle code ke aakhri line me apni Firebase URL paste karein!");
+    } else {
+        syncFromFirebase();
+        // Har 5 second me data automatic background me refresh hoga dono devices par
+        setInterval(syncFromFirebase, 5000);
+    }
+};
+
+// FIREBASE SYNC FUNCTIONS
+async function syncFromFirebase() {
+    try {
+        let response = await fetch(`${FIREBASE_URL}/bills.json`);
+        let data = await response.json();
+        globalBills = [];
+        if (data) {
+            // Objective key mapping to normal array
+            Object.keys(data).forEach(key => {
+                if(data[key]) globalBills.push(data[key]);
+            });
+        }
+        calculateReports();
+        loadHistory();
+        if(!isEditingBill) generateInvoice();
+    } catch (e) { console.log("Network error or database offline:", e); }
+}
+
+async function saveBillToFirebase(billData) {
+    try {
+        // Invoice number ko unique key bana rahe hain path me taaki overwrite/edit sahi se ho
+        let urlName = billData.invoice; 
+        await fetch(`${FIREBASE_URL}/bills/${urlName}.json`, {
+            method: 'PUT',
+            body: JSON.stringify(billData)
+        });
+        await syncFromFirebase();
+        return true;
+    } catch(e) {
+        alert("Internet Slow hai ya Offline hai! Bill save nahi ho paya.");
+        return false;
+    }
+}
+
+async function deleteBillFromFirebase(inv) {
+    try {
+        await fetch(`${FIREBASE_URL}/bills/${inv}.json`, { method: 'DELETE' });
+        await syncFromFirebase();
+    } catch(e) { alert("Delete failed! Check internet connection."); }
+}
+
+function generateInvoice() {
+    let year = new Date().getFullYear();
+    let maxNum = 0;
+    
+    globalBills.forEach(b => {
+        if(b.invoice && b.invoice.startsWith("INV-" + year)) {
+            let parts = b.invoice.split("-");
+            let num = parseInt(parts[2]) || 0;
+            if(num > maxNum) maxNum = num;
+        }
+    });
+    
+    let next = maxNum + 1;
+    let padded = String(next).padStart(3, '0');
+    invoiceInput.value = "INV-" + year + "-" + padded;
+}
+
+function sendWhatsApp() {
+    let mobile = document.getElementById("mobile").value.trim();
+    if (!mobile || mobile.length < 10) { alert("Enter valid mobile number"); return; }
+    let invoice = invoiceInput.value;
+    let customer = customerInput.value;
+    let message = `🧾 RAZA KIRANA BILL\n\nInvoice: ${invoice}\nCustomer: ${customer}\nTotal Amount: ${grandText.innerText}\nPaid Amount: ${paidShow.innerText}\nBalance Due: ${dueText.innerText}\n\nThank you!`;
+    let url = "https://wa.me/91" + mobile + "?text=" + encodeURIComponent(message);
+    window.open(url, '_blank');
+}
+  
+customerInput.addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); dateInput.focus(); } });
+dateInput.addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); prevInput.focus(); } });
+prevInput.addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); paidInput.focus(); } });
+paidInput.addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); nameInput.focus(); } });
+nameInput.addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); rateInput.focus(); } });
+rateInput.addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); qtyInput.focus(); } });
+qtyInput.addEventListener("keydown", function(e) { if (e.key === "Enter") { e.preventDefault(); addItem(); nameInput.focus(); } });
+
+function parseQty(val) {
+    val = val.toLowerCase().trim();
+    if (val.includes("kg")) { return { kg: parseFloat(val) || 0, display: val }; }
+    if (val.includes("g")) { return { kg: (parseFloat(val) || 0) / 1000, display: val }; }
+    let num = parseFloat(val) || 0;
+    return { kg: num, display: num };
+}
+
+function calcAmount() {
+    let rate = parseFloat(rateInput.value) || 0;
+    let qty = parseQty(qtyInput.value);
+    amountInput.value = (rate * qty.kg).toFixed(2);
+}
+
+function addItem() {
+    let name = nameInput.value.trim();
+    let rate = parseFloat(rateInput.value);
+    let qty = parseQty(qtyInput.value);
+    let amt = parseFloat(amountInput.value);
+    
+    if (!name || !rate || !qty.kg) { alert("Please enter Item, Rate and Qty"); return; }
+    
+    let row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${name}</td>
+        <td>${rate.toFixed(2)}</td>
+        <td data-kg="${qty.kg}">${qty.display}</td>
+        <td>${amt.toFixed(2)}</td>
+        <td class="action-col">
+            <button class="edit-btn" onclick="editRow(this)">✏️</button>
+            <button class="delete-btn" onclick="del(this)">🗑</button>
+        </td>`;
+    billTable.querySelector("tbody").appendChild(row);
+    
+    nameInput.value = ""; rateInput.value = ""; qtyInput.value = ""; amountInput.value = "";
+    updateTotals();
+}
+
+function del(btn) { btn.parentElement.parentElement.remove(); updateTotals(); }
+
+function editRow(btn) {
+    let row = btn.parentElement.parentElement;
+    nameInput.value = row.cells[0].innerText;
+    rateInput.value = row.cells[1].innerText;
+    qtyInput.value = row.cells[2].innerText;
+    calcAmount();
+    row.remove();
+    updateTotals();
+    nameInput.focus();
+}
+
+function updateTotals() {
+    let rows = document.querySelectorAll("#bill tbody tr");
+    let total = 0;
+    rows.forEach(r => { total += parseFloat(r.cells[3].innerText) || 0; });
+    currentText.innerText = "₹" + total.toFixed(2);
+    
+    let prev = parseFloat(prevInput.value) || 0;
+    prevShow.innerText = "₹" + prev.toFixed(2);
+    
+    let grand = total + prev;
+    grandText.innerText = "₹" + grand.toFixed(2);
+    
+    let paid = parseFloat(paidInput.value) || 0;
+    paidShow.innerText = "₹" + paid.toFixed(2);
+    
+    let due = grand - paid;
+    dueText.innerText = "₹" + due.toFixed(2);
+}
+
+async function saveBill() {
+    let invoice = invoiceInput.value;
+    let rows = document.querySelectorAll("#bill tbody tr");
+    if (rows.length === 0) return false;
+
+    let items = [];
+    rows.forEach(r => {
+        items.push({
+            name: r.cells[0].innerText,
+            rate: r.cells[1].innerText,
+            qty: r.cells[2].innerText,
+            kg: r.cells[2].getAttribute('data-kg'),
+            amt: r.cells[3].innerText
+        });
+    });
+
+    let billData = {
+        invoice: invoice,
+        customer: customerInput.value.trim(),
+        date: dateInput.value,
+        prevBal: prevInput.value,
+        paidAmt: paidInput.value,
+        items: items
+    };
+
+    let done = await saveBillToFirebase(billData);
+    return done;
+}
+
+function calculateReports() {
+    let today = new Date().toISOString().split("T")[0];
+    let todayCustomers = 0;
+    let todaySale = 0;
+
+    globalBills.forEach(b => {
+        if (b.date === today) {
+            todayCustomers++;
+            if (b.items && Array.isArray(b.items)) {
+                b.items.forEach(it => { todaySale += parseFloat(it.amt) || 0; });
+            }
+        }
+    });
+    document.getElementById("todayCustomers").innerText = todayCustomers;
+    document.getElementById("todaySale").innerText = "₹" + todaySale.toFixed(2);
+}
+
+function dateReport() {
+    let from = document.getElementById("fromDate").value;
+    let to = document.getElementById("toDate").value;
+    if (!from || !to) { alert("Select both dates"); return; }
+
+    let count = 0;
+    let sale = 0;
+
+    globalBills.forEach(b => {
+        if (b.date >= from && b.date <= to) {
+            count++;
+            if (b.items && Array.isArray(b.items)) {
+                b.items.forEach(it => { sale += parseFloat(it.amt) || 0; });
+            }
+        }
+    });
+    document.getElementById("rangeCustomers").innerText = count;
+    document.getElementById("rangeSale").innerText = "₹" + sale.toFixed(2);
+}
+
+function printBill() {
+    if (customerInput.value.trim() === "") { alert("Pehle Customer Name likhen!"); customerInput.focus(); return; }
+    if (document.querySelectorAll("#bill tbody tr").length === 0) { alert("Bill mein koi item nahi hai!"); return; }
+    setTimeout(() => { window.print(); }, 300);
+}
+  
+function loadHistory() {
+    let historyTableBody = document.querySelector("#historyTable tbody");
+    historyTableBody.innerHTML = "";
+    
+    globalBills.sort((a, b) => {
+        if (b.date !== a.date) { return b.date.localeCompare(a.date); }
+        return b.invoice.localeCompare(a.invoice);
+    });
+    
+    globalBills.forEach(b => {
+        let row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${b.invoice}</td>
+            <td>${b.customer}</td>
+            <td>${b.date}</td>
+            <td>
+                <button class="save-btn" onclick="viewBill('${b.invoice}')">View</button> 
+                <button class="edit-btn" onclick="editBill('${b.invoice}')">Edit</button>
+                <button class="delete-btn" onclick="deleteHistory('${b.invoice}')">Del</button>
+            </td>`;
+        historyTableBody.appendChild(row);
+    });
+}
+
+async function deleteHistory(inv) {
+    if (confirm("Delete this bill forever from database?")) {
+        await deleteBillFromFirebase(inv);
+    }
+}
+
+function viewBill(inv) {
+    let b = globalBills.find(x => x.invoice === inv);
+    if (!b) { alert("Bill nahi mila!"); return; }
+    
+    let itemTotal = 0;
+    let itemsHtml = "";
+    if (b.items && Array.isArray(b.items)) {
+        b.items.forEach(it => {
+            itemTotal += parseFloat(it.amt) || 0;
+            itemsHtml += `
+                <tr>
+                    <td style="padding:8px; border:1px solid #ddd;">${it.name}</td>
+                    <td style="padding:8px; border:1px solid #ddd; text-align:center;">${it.rate}</td>
+                    <td style="padding:8px; border:1px solid #ddd; text-align:center;">${it.qty}</td>
+                    <td style="padding:8px; border:1px solid #ddd; text-align:right;">${it.amt}</td>
+                </tr>`;
+        });
+    }
+
+    let prevBal = parseFloat(b.prevBal) || 0;
+    let grandTotal = itemTotal + prevBal;
+    let paidAmt = parseFloat(b.paidAmt) || 0;
+    let balanceDue = grandTotal - paidAmt;
+
+    let w = window.open('', '_blank');
+    w.document.write(`
+        <html>
+        <head><title>Bill - ${b.invoice}</title>
+        <style>
+            body { font-family: sans-serif; padding: 15px; line-height: 1.4; color: #333; }
+            table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+            th { background: #2c3e50; color: white; padding: 10px; }
+            td { padding: 8px; border: 1px solid #ddd; }
+            .total-sec { text-align: right; margin-top: 20px; }
+            .grand { color: #e67e22; font-size: 20px; border-top: 2px solid #ddd; padding-top: 10px; }
+            .due { color: #e74c3c; font-size: 20px; font-weight: bold; }
+            .print-btn { background: #27ae60; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
+            @media print { .print-btn { display: none; } }
+        </style></head>
+        <body>
+            <div style="text-align:center;">
+                <h2 style="margin:0; color:#27ae60;">RAZA KIRANA</h2>
+                <p style="margin:5px 0;">Manyar Wada, Hingone, Yawal<br>📞 9834515540</p>
+            </div><hr>
+            <p><b>Bill No:</b> ${b.invoice}<br><b>Customer:</b> ${b.customer}<br><b>Date:</b> ${b.date}</p>
+            <table>
+                <thead><tr><th>Item</th><th>Rate</th><th>Qty</th><th>Amt</th></tr></thead>
+                <tbody>${itemsHtml}</tbody>
+            </table>
+            <div class="total-sec">
+                <p>Current Total: <b>₹${itemTotal.toFixed(2)}</b></p>
+                <p>Previous Balance: <b>₹${prevBal.toFixed(2)}</b></p>
+                <h2 class="grand">Grand Total: ₹${grandTotal.toFixed(2)}</h2>
+                <p>Amount Paid: <b>₹${paidAmt.toFixed(2)}</b></p>
+                <div class="due">Balance Due (Baki): ₹${balanceDue.toFixed(2)}</div>
+            </div>
+            <button class="print-btn" onclick="window.print()">PRINT / SAVE AS PDF</button>
+        </body></html>
+    `);
+    w.document.close();
+}
+
+function editBill(inv) {
+    let b = globalBills.find(x => x.invoice === inv);
+    if (!b) return;
+    
+    invoiceInput.value = b.invoice;
+    isEditingBill = true;
+    customerInput.value = b.customer;
+    dateInput.value = b.date;
+    prevInput.value = b.prevBal || 0;
+    paidInput.value = b.paidAmt || 0;
+    
+    billTable.querySelector("tbody").innerHTML = "";
+    if (b.items && Array.isArray(b.items)) {
+        b.items.forEach(it => {
+            let row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${it.name}</td><td>${it.rate}</td><td data-kg="${it.kg}">${it.qty}</td><td>${it.amt}</td>
+                <td class="action-col"><button class="edit-btn" onclick="editRow(this)">✏️</button><button class="delete-btn" onclick="del(this)">🗑</button></td>`;
+            billTable.querySelector("tbody").appendChild(row);
+        });
+    }
+    updateTotals();
+    document.getElementById("historySection").style.display = "none";
+    window.scrollTo(0, 0);
+    customerInput.focus();
+}
+
+function toggleHistory() {
+    let sec = document.getElementById("historySection");
+    if (sec.style.display === "none" || sec.style.display === "") {
+        sec.style.display = "block";
+        loadHistory();
+        setTimeout(() => { sec.scrollIntoView({ behavior: "smooth", block: "start" }); }, 300);
+    } else { sec.style.display = "none"; }
+}
+  
+function searchBill() {
+    let val = document.getElementById("searchBill").value.toLowerCase().trim();
+    let rows = document.querySelectorAll("#historyTable tbody tr");
+    rows.forEach(r => {
+        let invoice = r.cells[0].innerText.toLowerCase();
+        let customer = r.cells[1].innerText.toLowerCase();
+        r.style.display = (invoice.includes(val) || customer.includes(val)) ? "" : "none";
+    });
+}
+
+async function resetBill() {
+    let rows = document.querySelectorAll("#bill tbody tr");
+    if (rows.length === 0) {
+        isEditingBill = false; customerInput.value = ""; prevInput.value = "0"; paidInput.value = "0";
+        billTable.querySelector("tbody").innerHTML = ""; updateTotals(); generateInvoice(); customerInput.focus();
+        return;
+    }
+    if (!confirm("Save this bill to cloud and start new?")) return;
+    let saved = await saveBill();
+    if (!saved) return;
+
+    isEditingBill = false;
+    billTable.querySelector("tbody").innerHTML = "";
+    customerInput.value = ""; prevInput.value = "0"; paidInput.value = "0";
+    currentText.innerText = "₹0.00"; prevShow.innerText = "₹0.00"; grandText.innerText = "₹0.00"; paidShow.innerText = "₹0.00"; dueText.innerText = "₹0.00";
+    generateInvoice(); customerInput.focus();
+}
+
+document.getElementById("historyBtn").addEventListener("click", function() { toggleHistory(); });
+</script>
+</body>
+</html>
